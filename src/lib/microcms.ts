@@ -80,10 +80,10 @@ function localizedName(content: { nameZh: string; nameJa: string; nameEn: string
 
 // 必須のmicroCMS環境変数を検証する。
 function getMicrocmsConfiguration() {
-  // サービスドメインを環境変数から取得する。
-  const serviceDomain = import.meta.env.MICROCMS_SERVICE_DOMAIN;
-  // 読み取り専用APIキーを環境変数から取得する。
-  const apiKey = import.meta.env.MICROCMS_API_KEY;
+  // Astroの環境変数またはCloudflareのNode.js環境変数からサービスドメインを取得する。
+  const serviceDomain = import.meta.env.MICROCMS_SERVICE_DOMAIN || process.env.MICROCMS_SERVICE_DOMAIN;
+  // Astroの環境変数またはCloudflareのNode.js環境変数から読み取り専用APIキーを取得する。
+  const apiKey = import.meta.env.MICROCMS_API_KEY || process.env.MICROCMS_API_KEY;
   // 未設定のままビルドしないようにする。
   if (!serviceDomain || !apiKey) throw new Error("MICROCMS_SERVICE_DOMAIN と MICROCMS_API_KEY を設定してください。");
   // 接続設定を返す。
