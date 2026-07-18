@@ -1,0 +1,94 @@
+:root { color-scheme: light; font-family: "Noto Sans JP", "Yu Gothic", system-ui, sans-serif; color: #142033; background: #f4f7fb; } /* サイト全体の配色と基本書体を指定する。 */
+* { box-sizing: border-box; } /* すべての要素で寸法計算を統一する。 */
+html { scroll-behavior: smooth; } /* ページ内移動を滑らかにする。 */
+body { margin: 0; min-width: 320px; line-height: 1.7; } /* 本文の余白と最小幅と行間を設定する。 */
+a { color: inherit; text-decoration: none; } /* リンクの基本表示を継承する。 */
+img { display: block; max-width: 100%; } /* 画像の余白と最大幅を制御する。 */
+h1, h2, h3, p { margin-top: 0; } /* 見出しと段落の上余白をリセットする。 */
+.site-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 18px clamp(24px, 6vw, 96px); border-bottom: 1px solid #dce3ed; background: rgba(250,252,255,.92); backdrop-filter: blur(14px); } /* 固定ヘッダーの配置と半透明背景を設定する。 */
+.brand { display: flex; align-items: center; gap: 12px; letter-spacing: .08em; } /* ブランド表示の配置を設定する。 */
+.brand strong { display: block; font-size: 18px; line-height: 1; } /* ブランド名の文字サイズを設定する。 */
+.brand small { display: block; margin-top: 5px; color: #617087; font-size: 9px; font-weight: 700; } /* ブランド補足の文字スタイルを設定する。 */
+.brand-mark { display: grid; width: 34px; aspect-ratio: 1; place-items: center; color: white; background: #0a3b75; clip-path: polygon(50% 0,100% 100%,0 100%); font-weight: 800; } /* 三角形のブランドマークを設定する。 */
+nav { display: flex; align-items: center; gap: clamp(16px,3vw,38px); color: #25364d; font-size: 14px; font-weight: 700; } /* ナビゲーションの配置と文字スタイルを設定する。 */
+nav a:hover { color: #0879c9; } /* ナビゲーションのホバー色を設定する。 */
+.nav-contact { padding: 10px 17px; color: white; background: #0a3b75; } /* 問い合わせ導線を強調する。 */
+.language-link { color: #0879c9; } /* 言語切替リンクを強調する。 */
+.hero { display: grid; min-height: min(760px,calc(100vh - 73px)); grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: stretch; background: #e8eff7; } /* トップの二分割ヒーローを設定する。 */
+.hero-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(64px,10vw,156px) clamp(24px,8vw,128px); } /* ヒーロー本文の余白と配置を設定する。 */
+.eyebrow { margin: 0 0 16px; color: #0879c9; font-size: 11px; font-weight: 800; letter-spacing: .18em; } /* 英字ラベルの視覚表現を設定する。 */
+h1 { margin-bottom: 26px; color: #12233c; font-size: clamp(42px,5.5vw,80px); line-height: 1.18; letter-spacing: -.06em; } /* 主見出しの大きさと行間を設定する。 */
+h1 em { color: #0879c9; font-style: normal; } /* 主見出しの強調色を設定する。 */
+h2 { color: #132640; font-size: clamp(30px,4vw,52px); line-height: 1.3; letter-spacing: -.045em; } /* セクション見出しの文字スタイルを設定する。 */
+.hero-lead { max-width: 32rem; color: #40536e; font-size: 17px; } /* ヒーロー説明文の可読幅を設定する。 */
+.hero-image { width: 100%; height: 100%; min-height: 460px; object-fit: cover; object-position: center; } /* ヒーロー画像の切り抜きと表示領域を設定する。 */
+.action-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; } /* 行動ボタンの並びを設定する。 */
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 25px; font-weight: 800; transition: transform .2s,background .2s; } /* ボタンの共通スタイルを設定する。 */
+.button:hover { transform: translateY(-2px); } /* ボタンのホバー時に軽い浮遊感を付ける。 */
+.button-primary { color: white; background: #0879c9; } /* 主要ボタンの配色を設定する。 */
+.button-primary:hover { background: #0566aa; } /* 主要ボタンのホバー色を設定する。 */
+.button-quiet { border: 1px solid #aebdce; color: #1c3552; } /* 補助ボタンの枠線と文字色を設定する。 */
+.section { padding: clamp(68px,10vw,136px) clamp(24px,8vw,128px); } /* 共通セクション余白を設定する。 */
+.trust-section, .prose-section, .product-catalog, .detail-grid, .contact-grid { background: white; } /* 白背景を使う主要セクションを設定する。 */
+.feature-grid, .product-grid, .value-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 54px; } /* 三列カードグリッドを設定する。 */
+.feature-grid article, .value-grid article { padding: 30px; border-top: 2px solid #b9c8d9; background: #f5f8fc; } /* 特長カードの見た目を設定する。 */
+.feature-grid span, .value-grid span { color: #0879c9; font-size: 12px; font-weight: 800; letter-spacing: .14em; } /* 番号ラベルの文字スタイルを設定する。 */
+.feature-grid h3 { margin: 14px 0 10px; color: #142944; font-size: 21px; } /* 特長見出しの文字スタイルを設定する。 */
+.feature-grid p, .product-card small, .value-grid p { color: #64758b; } /* 補足文の色を設定する。 */
+.catalog-section { color: white; background: #112944; } /* 製品カテゴリセクションの濃色背景を設定する。 */
+.catalog-section h2, .catalog-section .eyebrow, .contact-banner h2, .contact-banner .eyebrow, .contact-method h2, .contact-method .eyebrow { color: white; } /* 濃色背景上の見出し色を設定する。 */
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 44px; } /* セクション見出しとリンクの配置を設定する。 */
+.section-heading > a { color: #7bc5fd; font-weight: 700; } /* セクションリンクの文字色を設定する。 */
+.category-list { border-top: 1px solid rgba(255,255,255,.25); } /* カテゴリ一覧の上罫線を設定する。 */
+.category-list a { display: grid; grid-template-columns: 52px 1fr 24px; gap: 12px; padding: 15px 4px; border-bottom: 1px solid rgba(255,255,255,.16); transition: padding .2s,background .2s; } /* カテゴリ行の配置と動きを設定する。 */
+.category-list a:hover { padding-left: 16px; background: rgba(255,255,255,.07); } /* カテゴリ行のホバー状態を設定する。 */
+.category-list span, .category-list b { color: #76bcec; font-size: 12px; font-weight: 800; } /* カテゴリ番号と矢印の色を設定する。 */
+.featured-section { background: #f4f7fb; } /* 代表製品セクションの背景を設定する。 */
+.product-card { overflow: hidden; padding-bottom: 24px; background: white; transition: transform .2s,box-shadow .2s; } /* 製品カードの見た目と動きを設定する。 */
+.product-card:hover { box-shadow: 0 16px 40px rgba(20,41,68,.14); transform: translateY(-5px); } /* 製品カードのホバー状態を設定する。 */
+.product-card > p, .product-card h3, .product-card small { display: block; margin-right: 24px; margin-left: 24px; } /* 製品カード本文の横余白を設定する。 */
+.product-card > p { margin-top: 21px; margin-bottom: 4px; color: #0879c9; font-size: 12px; font-weight: 800; } /* 製品カード分類の文字スタイルを設定する。 */
+.product-card h3 { margin-bottom: 8px; color: #152a45; font-size: 24px; } /* 製品カード型番の文字スタイルを設定する。 */
+.product-visual { display: grid; min-height: 220px; place-items: center; overflow: hidden; color: white; background: linear-gradient(135deg,#132a45,#0879c9); } /* 製品画像の代替ビジュアルを設定する。 */
+.product-visual span { padding: 12px; border: 1px solid rgba(255,255,255,.55); font-size: 24px; font-weight: 800; letter-spacing: .07em; } /* 製品型番の表示を設定する。 */
+.contact-banner { padding: clamp(70px,11vw,150px) clamp(24px,8vw,128px); color: white; background: linear-gradient(125deg,#0a3b75,#0879c9); } /* 問い合わせ誘導帯の配色と余白を設定する。 */
+.page-hero { padding: clamp(84px,13vw,176px) clamp(24px,16vw,240px); background: linear-gradient(130deg,#e7f0fa,#f9fbfd); } /* 下層ページの導入領域を設定する。 */
+.page-hero > p:last-child, .detail-copy > p:not(.eyebrow), .prose p { max-width: 45rem; color: #53657c; font-size: 17px; } /* 本文の可読幅と文字色を設定する。 */
+.technology-image { max-height: 430px; overflow: hidden; background: #102945; } /* 技術紹介用の横長ビジュアル領域を設定する。 */
+.technology-image img { width: 100%; height: min(430px,40vw); min-height: 270px; object-fit: cover; object-position: center; } /* 技術紹介画像の切り抜きと表示領域を設定する。 */
+.prose-section, .catalog-group, .detail-grid, .contact-grid { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(40px,9vw,130px); } /* 二列情報レイアウトを設定する。 */
+.prose-label { color: #0879c9; font-size: 12px; font-weight: 800; letter-spacing: .15em; } /* 本文ラベルの文字スタイルを設定する。 */
+.notice { padding: 16px 18px; border-left: 3px solid #0879c9; background: #eff7fd; color: #42617d !important; font-size: 14px !important; } /* 注意書きの視認性を設定する。 */
+.value-grid { gap: 1px; padding: 0; background: #d7e0eb; } /* 価値提案カードの区切りを設定する。 */
+.value-grid article { padding: clamp(34px,5vw,74px); background: #f8fafc; } /* 価値提案カードの余白と背景を設定する。 */
+.value-grid h2 { margin: 16px 0 8px; font-size: clamp(25px,3vw,38px); } /* 価値提案見出しの文字サイズを設定する。 */
+.catalog-group { grid-template-columns: minmax(190px,.65fr) minmax(0,1.35fr); padding: 46px 0; border-bottom: 1px solid #dbe3ec; } /* 製品カテゴリ群の二列配置を設定する。 */
+.catalog-title h2 { margin-bottom: 0; font-size: clamp(24px,3vw,38px); } /* 製品カテゴリ見出しの文字サイズを設定する。 */
+.catalog-items { display: grid; gap: 10px; } /* 製品行の間隔を設定する。 */
+.product-row { display: grid; grid-template-columns: 116px minmax(100px,.6fr) 1fr 24px; align-items: center; gap: 16px; padding: 17px; background: #f4f7fb; transition: background .2s,transform .2s; } /* 製品行の配置と動きを設定する。 */
+.product-row:hover { background: #e6f3fc; transform: translateX(4px); } /* 製品行のホバー状態を設定する。 */
+.product-row span { color: #0879c9; font-weight: 800; } /* 製品型番の色を設定する。 */
+.product-row small { color: #63758a; } /* 製品概要の色を設定する。 */
+.empty-message { margin: 0; color: #7a8796; } /* 空カテゴリの案内色を設定する。 */
+.product-detail-hero { padding: clamp(62px,9vw,124px) clamp(24px,16vw,240px); color: white; background: #142d4b; } /* 製品詳細の導入領域を設定する。 */
+.product-detail-hero > a { display: inline-block; margin-bottom: 56px; color: #9bd8ff; font-weight: 700; } /* 製品一覧へ戻るリンクを設定する。 */
+.product-detail-hero h1 { margin-bottom: 5px; color: white; } /* 製品型番の主見出し色を設定する。 */
+.product-detail-hero p:last-child { margin: 0; color: #c7d7e8; font-size: 20px; } /* 製品名の文字スタイルを設定する。 */
+.detail-visual { min-height: 380px; } /* 詳細用の製品ビジュアル高さを設定する。 */
+dl { margin: 30px 0; } /* 定義リストの上下余白を設定する。 */
+dl div { display: grid; grid-template-columns: 120px 1fr; padding: 12px 0; border-bottom: 1px solid #dbe3eb; } /* 定義リストの行構成を設定する。 */
+dt { color: #64758a; } /* 定義リストの見出し色を設定する。 */
+dd { margin: 0; color: #1c324e; font-weight: 700; } /* 定義リストの値の文字スタイルを設定する。 */
+.specification-note { background: #e9f3fa; } /* 仕様案内領域の背景を設定する。 */
+.specification-note p:last-child { max-width: 42rem; color: #52677e; } /* 仕様案内文の可読幅を設定する。 */
+.contact-list { margin: 0; } /* 問い合わせ先リストの余白をリセットする。 */
+.contact-list div { grid-template-columns: 110px 1fr; padding: 18px 0; } /* 問い合わせ先行の余白を設定する。 */
+.contact-list a { color: #0879c9; } /* 問い合わせ先リンクの色を設定する。 */
+.contact-method { color: white; background: #142d4b; } /* 問い合わせ方法領域の背景を設定する。 */
+.contact-method p { max-width: 43rem; color: #cfdeec; } /* 問い合わせ方法説明の文字色を設定する。 */
+.site-footer { display: grid; grid-template-columns: 1fr auto; gap: 30px; padding: 48px clamp(24px,8vw,128px); color: #c9d5e2; background: #0c1d31; } /* フッターの配置と配色を設定する。 */
+.site-footer strong { color: white; letter-spacing: .12em; } /* フッターブランド名の文字スタイルを設定する。 */
+.site-footer p { margin: 7px 0 0; font-size: 13px; } /* フッター説明文の余白を設定する。 */
+.footer-contact { display: flex; flex-direction: column; align-items: end; gap: 5px; color: white; font-weight: 700; } /* フッター連絡先の配置を設定する。 */
+.site-footer small { grid-column: 1 / -1; padding-top: 22px; border-top: 1px solid #30445c; color: #91a3b6; } /* フッター著作権表示を設定する。 */
+@media (max-width: 780px) { .site-header { padding: 14px 20px; } .brand small { display: none; } nav { gap: 13px; font-size: 12px; } .nav-contact { padding: 8px 10px; } .hero { grid-template-columns: 1fr; } .hero-image { min-height: 330px; max-height: 430px; } .feature-grid, .product-grid, .value-grid, .prose-section, .catalog-group, .detail-grid, .contact-grid { grid-template-columns: 1fr; } .section-heading { align-items: start; flex-direction: column; } .product-row { grid-template-columns: 1fr 24px; } .product-row span, .product-row small { display: none; } .site-footer { grid-template-columns: 1fr; } .footer-contact { align-items: start; } } /* モバイル幅でレイアウトを一列へ切り替える。 */

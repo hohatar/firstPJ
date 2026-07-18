@@ -1,0 +1,21 @@
+---
+// 共通レイアウトを読み込む。
+import BaseLayout from "../layouts/BaseLayout.astro";
+// microCMSから日本語のカテゴリと製品を取得する。
+import { getCatalog } from "../lib/microcms";
+// 表示する代表製品を先頭3件に限定する。
+const { categories, products } = await getCatalog("ja");
+// 表示する代表製品を先頭3件に限定する。
+const featuredProducts = products.slice(0, 3);
+---
+
+<BaseLayout title="静電気対策・除電技術" description="静電気対策・除電技術のASD ESD。製品、技術、導入に関するお問い合わせを承ります。">
+  <section class="hero">
+    <div class="hero-copy"><p class="eyebrow">ELECTROSTATIC CONTROL TECHNOLOGY</p><h1>静電気対策を、<br /><em>確かな技術</em>へ。</h1><p class="hero-lead">高周波型除電技術を中心に、製造現場の静電気課題へ的確なソリューションを提供します。</p><div class="action-row"><a class="button button-primary" href="/products/">製品を見る</a><a class="button button-quiet" href="/about/">ASD ESDについて</a></div></div>
+    <img class="hero-image" src="/images/hero-industrial-lab-v2.png" alt="電子基板にイオンブロワーを用いて静電気対策を行うイメージ" />
+  </section>
+  <section class="section trust-section"><p class="eyebrow">OUR EXPERTISE</p><h2>現場に求められる、<br />安定した除電性能。</h2><div class="feature-grid"><article><span>01</span><h3>高周波型技術</h3><p>高周波型除電シリーズを中心に、安定した静電気対策を目指します。</p></article><article><span>02</span><h3>幅広い製品群</h3><p>イオンブロワー、イオンガン、イオンバー、静電気対策用品まで対応します。</p></article><article><span>03</span><h3>技術サポート</h3><p>製品選定から運用まで、用途に合わせた提案を行います。</p></article></div></section>
+  <section class="section catalog-section"><div class="section-heading"><div><p class="eyebrow">PRODUCTS</p><h2>製品ラインアップ</h2></div><a href="/products/">すべての製品を見る →</a></div><div class="category-list">{categories.map((category, index) => <a href="/products/#all-products"><span>{String(index + 1).padStart(2, "0")}</span>{category.name}<b>↗</b></a>)}</div></section>
+  <section class="section featured-section"><div class="section-heading"><div><p class="eyebrow">FEATURED</p><h2>代表製品</h2></div></div><div class="product-grid">{featuredProducts.map((product) => <a class="product-card" href={`/products/${product.slug}/`}><div class="product-visual"><span>{product.modelNumber}</span></div><p>{product.name}</p><h3>{product.modelNumber}</h3><small>製品情報を見る</small></a>)}</div></section>
+  <section class="contact-banner"><p class="eyebrow">CONTACT</p><h2>製品選定や静電気対策のご相談は、<br />お気軽にお問い合わせください。</h2><a class="button button-primary" href="/contact/">お問い合わせ</a></section>
+</BaseLayout>

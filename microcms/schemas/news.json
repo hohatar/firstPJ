@@ -1,0 +1,14 @@
+{
+  "apiFields": [
+    { "fieldId": "slug", "name": "スラッグ", "kind": "text", "required": true, "description": "3言語共通のURL識別子。英小文字・ハイフンを使用", "isUnique": true },
+    { "fieldId": "announcementDate", "name": "掲載日", "kind": "date", "required": true, "description": "サイトに表示する掲載日。microCMSの予約済み日時フィールドは使用しない" },
+    { "fieldId": "titleZh", "name": "タイトル（中国語）", "kind": "text", "required": true, "description": "中国語の公開タイトル", "isUnique": false },
+    { "fieldId": "titleJa", "name": "タイトル（日本語）", "kind": "text", "required": true, "description": "日本語の公開タイトル", "isUnique": false },
+    { "fieldId": "titleEn", "name": "タイトル（英語）", "kind": "text", "required": true, "description": "英語の公開タイトル", "isUnique": false },
+    { "fieldId": "bodyZh", "name": "本文（中国語）", "kind": "richEditorV2", "required": true, "description": "中国語の本文" },
+    { "fieldId": "bodyJa", "name": "本文（日本語）", "kind": "richEditorV2", "required": true, "description": "日本語の本文" },
+    { "fieldId": "bodyEn", "name": "本文（英語）", "kind": "richEditorV2", "required": true, "description": "英語の本文" },
+    { "fieldId": "thumbnail", "name": "一覧画像", "kind": "media", "required": false, "description": "お知らせ一覧およびSNS用画像" }
+  ],
+  "customFields": []
+}

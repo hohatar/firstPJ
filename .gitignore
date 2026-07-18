@@ -1,0 +1,30 @@
+# Dependencies
+# 依存パッケージはリポジトリに含めない。
+node_modules/
+
+# Astro build output
+# ビルド生成物は再生成できるため含めない。
+dist/
+# Astroのローカルキャッシュは含めない。
+.astro/
+
+# Local environment secrets
+# ローカル環境変数は秘密情報を含む可能性があるため含めない。
+.env
+# 派生したローカル環境変数も含めない。
+.env.*
+# 共有用の環境変数テンプレートだけは追跡する。
+!.env.example
+
+# Test and editor artifacts
+# ブラウザテストのレポートは生成物のため含めない。
+playwright-report/
+# テスト実行結果は生成物のため含めない。
+test-results/
+# macOSのメタデータは含めない。
+.DS_Store
+# Windowsのメタデータは含めない。
+Thumbs.db
+
+# 旧サイトから取得した移行用の原本画像はローカル保管にする。
+assets/legacy-source/

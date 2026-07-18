@@ -1,0 +1,19 @@
+---
+// 共通レイアウトを読み込む。
+import BaseLayout from "../../layouts/BaseLayout.astro";
+// microCMSから中国語のカテゴリと製品を取得する。
+import { getCatalog } from "../../lib/microcms";
+
+// ビルド時に中国語のカタログを取得する。
+const { categories, products } = await getCatalog("zh");
+// 表示する代表製品を先頭3件に限定する。
+const featuredProducts = products.slice(0, 3);
+---
+
+<BaseLayout lang="zh" title="静电消除与防静电技术" description="北京亚司达科技发展有限公司，专业从事除静电设备和静电防护产品的研究、开发、生产和销售。">
+  <section class="hero"><div class="hero-copy"><p class="eyebrow">ELECTROSTATIC CONTROL TECHNOLOGY</p><h1>专业静电控制，<br /><em>源于可靠技术。</em></h1><p class="hero-lead">北京亚司达科技发展有限公司专业从事除静电设备和静电防护产品的研究、开发、生产和销售。</p><div class="action-row"><a class="button button-primary" href="/zh/products/">浏览产品</a><a class="button button-quiet" href="/zh/about/">公司简介</a></div></div><img class="hero-image" src="/images/hero-industrial-lab-v2.png" alt="工业电子制造环境中的静电控制示意图" /></section>
+  <section class="section trust-section"><p class="eyebrow">OUR EXPERTISE</p><h2>面向制造现场的<br />稳定除静电能力。</h2><div class="feature-grid"><article><span>01</span><h3>高频技术</h3><p>以高频型除静电系列产品为核心，追求稳定的离子平衡和除电能力。</p></article><article><span>02</span><h3>完整产品范围</h3><p>覆盖离子风机、离子风枪、离子风棒及静电防护相关产品。</p></article><article><span>03</span><h3>系统服务支持</h3><p>为客户提供面向实际应用的产品选型与系统服务支持。</p></article></div></section>
+  <section class="section catalog-section"><div class="section-heading"><div><p class="eyebrow">PRODUCTS</p><h2>产品展示</h2></div><a href="/zh/products/">查看全部产品 →</a></div><div class="category-list">{categories.map((category, index) => <a href="/zh/products/#all-products"><span>{String(index + 1).padStart(2, "0")}</span>{category.name}<b>↗</b></a>)}</div></section>
+  <section class="section featured-section"><div class="section-heading"><div><p class="eyebrow">FEATURED</p><h2>代表产品</h2></div></div><div class="product-grid">{featuredProducts.map((product) => <a class="product-card" href={`/zh/products/${product.slug}/`}><div class="product-visual"><span>{product.modelNumber}</span></div><p>{product.name}</p><h3>{product.modelNumber}</h3><small>查看产品信息</small></a>)}</div></section>
+  <section class="contact-banner"><p class="eyebrow">CONTACT</p><h2>如需产品选型或静电控制方案，<br />欢迎联系我们。</h2><a class="button button-primary" href="/zh/contact/">联系我们</a></section>
+</BaseLayout>

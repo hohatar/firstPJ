@@ -1,0 +1,28 @@
+{
+  "apiFields": [
+    { "fieldId": "companyNameZh", "name": "会社名（中国語）", "kind": "text", "required": true, "description": "中国語の正式会社名", "isUnique": false },
+    { "fieldId": "companyNameJa", "name": "会社名（日本語）", "kind": "text", "required": true, "description": "日本語の正式会社名", "isUnique": false },
+    { "fieldId": "companyNameEn", "name": "会社名（英語）", "kind": "text", "required": true, "description": "英語の正式会社名", "isUnique": false },
+    { "fieldId": "addressZh", "name": "住所（中国語）", "kind": "textArea", "required": false, "description": "中国語の住所" },
+    { "fieldId": "addressJa", "name": "住所（日本語）", "kind": "textArea", "required": false, "description": "日本語の住所" },
+    { "fieldId": "addressEn", "name": "住所（英語）", "kind": "textArea", "required": false, "description": "英語の住所" },
+    { "fieldId": "phone", "name": "代表電話", "kind": "text", "required": false, "description": "国番号を含む公開用の代表電話番号", "isUnique": false },
+    { "fieldId": "mobile", "name": "携帯電話", "kind": "text", "required": false, "description": "公開を承認した場合のみ入力", "isUnique": false },
+    { "fieldId": "fax", "name": "FAX", "kind": "text", "required": false, "description": "国番号を含むFAX番号", "isUnique": false },
+    { "fieldId": "email", "name": "公開用メールアドレス", "kind": "text", "required": false, "description": "問い合わせ先の公開用メールアドレス", "isUnique": false },
+    { "fieldId": "contactPerson", "name": "担当者名", "kind": "text", "required": false, "description": "公開を承認した場合のみ入力", "isUnique": false },
+    { "fieldId": "logo", "name": "ロゴ", "kind": "media", "required": false, "description": "承認済みの会社ロゴ" },
+    { "fieldId": "socialLinks", "name": "SNSリンク", "kind": "repeater", "required": false, "description": "SNSなどの外部リンク", "customFieldIds": ["social-link"] }
+  ],
+  "customFields": [
+    {
+      "fieldId": "social-link",
+      "name": "SNSリンク項目",
+      "fieldOrderByColumn": [["label"], ["url"]],
+      "fields": [
+        { "fieldId": "label", "name": "表示名", "kind": "text", "required": true, "description": "例：LinkedIn", "isUnique": false },
+        { "fieldId": "url", "name": "URL", "kind": "text", "required": true, "description": "httpsから始まる公開URL", "isUnique": false }
+      ]
+    }
+  ]
+}

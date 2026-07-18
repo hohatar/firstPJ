@@ -1,0 +1,19 @@
+{
+  "apiFields": [
+    { "fieldId": "slug", "name": "スラッグ", "kind": "text", "required": true, "description": "3言語共通のURL識別子。英小文字・ハイフンを使用", "isUnique": true },
+    { "fieldId": "legacyProductId", "name": "旧サイト製品ID", "kind": "number", "required": false, "description": "旧サイト移行時の照合用ID" },
+    { "fieldId": "modelNumber", "name": "型番", "kind": "text", "required": true, "description": "例：AB-06H", "isUnique": false },
+    { "fieldId": "displayOrder", "name": "表示順", "kind": "number", "required": true, "description": "小さい数値から順に表示" },
+    { "fieldId": "nameZh", "name": "製品名（中国語）", "kind": "text", "required": true, "description": "中国語の公開製品名", "isUnique": false },
+    { "fieldId": "nameJa", "name": "製品名（日本語）", "kind": "text", "required": true, "description": "日本語の公開製品名", "isUnique": false },
+    { "fieldId": "nameEn", "name": "製品名（英語）", "kind": "text", "required": true, "description": "英語の公開製品名", "isUnique": false },
+    { "fieldId": "summaryZh", "name": "概要（中国語）", "kind": "textArea", "required": false, "description": "中国語の短い製品説明" },
+    { "fieldId": "summaryJa", "name": "概要（日本語）", "kind": "textArea", "required": false, "description": "日本語の短い製品説明" },
+    { "fieldId": "summaryEn", "name": "概要（英語）", "kind": "textArea", "required": false, "description": "英語の短い製品説明" },
+    { "fieldId": "bodyZh", "name": "詳細（中国語）", "kind": "richEditorV2", "required": false, "description": "中国語の製品詳細" },
+    { "fieldId": "bodyJa", "name": "詳細（日本語）", "kind": "richEditorV2", "required": false, "description": "日本語の製品詳細" },
+    { "fieldId": "bodyEn", "name": "詳細（英語）", "kind": "richEditorV2", "required": false, "description": "英語の製品詳細" },
+    { "fieldId": "thumbnail", "name": "一覧画像", "kind": "media", "required": false, "description": "製品一覧カード用画像" }
+  ],
+  "customFields": []
+}

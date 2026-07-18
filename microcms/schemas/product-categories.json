@@ -1,0 +1,15 @@
+{
+  "apiFields": [
+    { "fieldId": "slug", "name": "スラッグ", "kind": "text", "required": true, "description": "3言語共通のURL識別子。英小文字・ハイフンを使用", "isUnique": true },
+    { "fieldId": "legacyCategoryId", "name": "旧サイトカテゴリID", "kind": "number", "required": false, "description": "旧サイト移行時の照合用ID" },
+    { "fieldId": "displayOrder", "name": "表示順", "kind": "number", "required": true, "description": "小さい数値から順に表示" },
+    { "fieldId": "nameZh", "name": "カテゴリ名（中国語）", "kind": "text", "required": true, "description": "中国語の公開カテゴリ名", "isUnique": false },
+    { "fieldId": "nameJa", "name": "カテゴリ名（日本語）", "kind": "text", "required": true, "description": "日本語の公開カテゴリ名", "isUnique": false },
+    { "fieldId": "nameEn", "name": "カテゴリ名（英語）", "kind": "text", "required": true, "description": "英語の公開カテゴリ名", "isUnique": false },
+    { "fieldId": "descriptionZh", "name": "説明（中国語）", "kind": "richEditorV2", "required": false, "description": "中国語のカテゴリ紹介" },
+    { "fieldId": "descriptionJa", "name": "説明（日本語）", "kind": "richEditorV2", "required": false, "description": "日本語のカテゴリ紹介" },
+    { "fieldId": "descriptionEn", "name": "説明（英語）", "kind": "richEditorV2", "required": false, "description": "英語のカテゴリ紹介" },
+    { "fieldId": "image", "name": "カテゴリ画像", "kind": "media", "required": false, "description": "カテゴリカード用画像" }
+  ],
+  "customFields": []
+}

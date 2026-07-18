@@ -1,0 +1,10 @@
+legacy_route,content_group,field_id,value_zh,value_ja,value_en,source_url,migration_status
+/Home/Index,site-settings,companyName,北京亚司达科技发展有限公司,,,http://www.asd-esd.cn/Home/Index,pending_translation
+/Home/Synopsis,company-profile,body,"北京亚司达科技发展有限公司（株式会社エイエスディー）是一家外商（日本）独资经营，注册于北京市中关村高科技园区，专业从事除静电设备和静电防护产品的研究、开发、生产和销售的高科技企业。我们生产的独特的高频型（68KHz）离子风机和离子风嘴已被世界上许多知名企业广泛使用。公司秉承自主技术创新原则，始终致力于提供高品质的静电控制产品和服务。",,,http://www.asd-esd.cn/Home/Synopsis,pending_translation
+/Home/ContactUs,site-settings,address,北京市昌平区回龙观,,,http://www.asd-esd.cn/Home/ContactUs,pending_translation
+/Home/ContactUs,site-settings,phone,0086-010-82416531,0086-010-82416531,0086-010-82416531,http://www.asd-esd.cn/Home/ContactUs,needs_confirmation
+/Home/ContactUs,site-settings,mobile,13911508061,13911508061,13911508061,http://www.asd-esd.cn/Home/ContactUs,needs_confirmation
+/Home/ContactUs,site-settings,fax,0086-010-82416531,0086-010-82416531,0086-010-82416531,http://www.asd-esd.cn/Home/ContactUs,needs_confirmation
+/Home/ContactUs,site-settings,email,asd-esd@163.com,asd-esd@163.com,asd-esd@163.com,http://www.asd-esd.cn/Home/ContactUs,needs_confirmation
+/Home/ContactUs,site-settings,contactPerson,司先生,,,http://www.asd-esd.cn/Home/ContactUs,needs_confirmation
+/Home/OnlineMessage,contact-form,legacyFields,姓名|邮箱|公司名称|公司主页|联系电话|传真|地址|城市|邮编|留言内容,,,http://www.asd-esd.cn/Home/OnlineMessage,not_migrated

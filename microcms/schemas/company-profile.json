@@ -1,0 +1,15 @@
+{
+  "apiFields": [
+    { "fieldId": "headlineZh", "name": "見出し（中国語）", "kind": "text", "required": true, "description": "中国語の会社紹介見出し", "isUnique": false },
+    { "fieldId": "headlineJa", "name": "見出し（日本語）", "kind": "text", "required": true, "description": "日本語の会社紹介見出し", "isUnique": false },
+    { "fieldId": "headlineEn", "name": "見出し（英語）", "kind": "text", "required": true, "description": "英語の会社紹介見出し", "isUnique": false },
+    { "fieldId": "bodyZh", "name": "本文（中国語）", "kind": "richEditorV2", "required": true, "description": "中国語の会社紹介本文" },
+    { "fieldId": "bodyJa", "name": "本文（日本語）", "kind": "richEditorV2", "required": true, "description": "日本語の会社紹介本文" },
+    { "fieldId": "bodyEn", "name": "本文（英語）", "kind": "richEditorV2", "required": true, "description": "英語の会社紹介本文" },
+    { "fieldId": "heroImage", "name": "メイン画像", "kind": "media", "required": false, "description": "会社紹介ページのメイン画像" },
+    { "fieldId": "metaDescriptionZh", "name": "SEO説明（中国語）", "kind": "textArea", "required": false, "description": "中国語の検索結果用説明" },
+    { "fieldId": "metaDescriptionJa", "name": "SEO説明（日本語）", "kind": "textArea", "required": false, "description": "日本語の検索結果用説明" },
+    { "fieldId": "metaDescriptionEn", "name": "SEO説明（英語）", "kind": "textArea", "required": false, "description": "英語の検索結果用説明" }
+  ],
+  "customFields": []
+}

@@ -1,0 +1,29 @@
+---
+// グローバルスタイルを読み込む。
+import "../styles/global.css";
+
+// 呼び出し元からページ情報と言語を受け取る。
+const { title, description = "静電気対策・除電技術のASD ESD", lang = "ja" } = Astro.props;
+// 中国語表示かどうかを判定する。
+const isChinese = lang === "zh";
+// 表示言語に応じたナビゲーション文言を定義する。
+const navigation = isChinese ? { about: "公司简介", products: "产品展示", contact: "联系我们", switchLabel: "日本語" } : { about: "会社・技術紹介", products: "製品", contact: "お問い合わせ", switchLabel: "中文" };
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} | ASD ESD</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="ASD ESD ホーム"><span class="brand-mark" aria-hidden="true">A</span><span><strong>ASD ESD</strong><small>STATIC CONTROL TECHNOLOGY</small></span></a>
+      <nav aria-label={isChinese ? "主要菜单" : "主要メニュー"}><a href={isChinese ? "/zh/about/" : "/about/"}>{navigation.about}</a><a href={isChinese ? "/zh/products/" : "/products/"}>{navigation.products}</a><a class="language-link" href={isChinese ? "/" : "/zh/"}>{navigation.switchLabel}</a><a class="nav-contact" href={isChinese ? "/zh/contact/" : "/contact/"}>{navigation.contact}</a></nav>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer"><div><strong>ASD ESD</strong><p>静電気対策・除電技術の専門企業</p></div><div class="footer-contact"><a href="tel:+861082416531">+86 10 8241 6531</a><a href="mailto:asd-esd@163.com">asd-esd@163.com</a></div><small>© {new Date().getFullYear()} Beijing ASD Technology Development Co., Ltd.</small></footer>
+  </body>
+</html>
