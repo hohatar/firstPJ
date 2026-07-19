@@ -1,6 +1,8 @@
 ---
 // 共通レイアウトを読み込む。
 import BaseLayout from "../../layouts/BaseLayout.astro";
+// 共通の製品詳細表示を読み込む。
+import ProductDetail from "../../components/ProductDetail.astro";
 // microCMSから中国語の製品データを取得する。
 import { getCatalog } from "../../lib/microcms";
 
@@ -17,6 +19,5 @@ const { product } = Astro.props;
 ---
 
 <BaseLayout lang="zh" title={`${product.modelNumber} | 产品展示`} description={`${product.name}（${product.modelNumber}）产品信息。`}>
-  <section class="product-detail-hero"><a href="/products/">← 返回产品列表</a><p class="eyebrow">PRODUCT</p><h1>{product.modelNumber}</h1><p>{product.name}</p></section>
-  <section class="section detail-grid"><div class="product-visual detail-visual"><span>{product.modelNumber}</span></div><div class="detail-copy"><p class="eyebrow">OVERVIEW</p><h2>{product.name}</h2><p>产品详细参数、适用范围、图片和资料将在microCMS确认和发布后补充。</p><dl><div><dt>型号</dt><dd>{product.modelNumber}</dd></div><div><dt>显示顺序</dt><dd>{product.displayOrder}</dd></div></dl><a class="button button-primary" href="/contact/">咨询此产品</a></div></section>
+  <ProductDetail product={product} productIndexPath="/products/" contactPath="/contact/" labels={{ back: "返回产品列表", overview: "产品概述", modelNumber: "型号", contact: "咨询此产品", imageAlt: "产品图片" }} />
 </BaseLayout>

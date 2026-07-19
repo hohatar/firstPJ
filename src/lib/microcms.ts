@@ -44,6 +44,20 @@ type MicrocmsProduct = {
   nameJa: string;
   // 英語の製品名を定義する。
   nameEn: string;
+  // 中国語の製品概要を任意で保持する。
+  summaryZh?: string;
+  // 日本語の製品概要を任意で保持する。
+  summaryJa?: string;
+  // 英語の製品概要を任意で保持する。
+  summaryEn?: string;
+  // 中国語の製品詳細を任意で保持する。
+  bodyZh?: string;
+  // 日本語の製品詳細を任意で保持する。
+  bodyJa?: string;
+  // 英語の製品詳細を任意で保持する。
+  bodyEn?: string;
+  // 一覧・詳細共通の製品画像を任意で保持する。
+  thumbnail?: { url: string; width?: number; height?: number };
 };
 
 // microCMSのリスト形式レスポンスを定義する。
@@ -78,6 +92,14 @@ export type CatalogProduct = {
   name: string;
   // 製品一覧の絞り込みに使うカテゴリのslugを定義する。
   categorySlug?: string;
+  // 言語に応じた製品概要を任意で保持する。
+  summary?: string;
+  // 安全なプレーンテキストへ変換済みの製品詳細を任意で保持する。
+  body?: string;
+  // 製品詳細に表示する画像URLを任意で保持する。
+  thumbnailUrl?: string;
+  // 本文内に登録された画像URLを任意で保持する。
+  bodyImageUrls: string[];
 };
 
 // 既存製品IDから既存カテゴリIDを引けるよう移行台帳を変換する。
@@ -99,6 +121,49 @@ function localizedName(content: { nameZh: string; nameJa: string; nameEn: string
   if (language === "en") return content.nameEn;
   // 日本語の表示名を返す。
   return content.nameJa;
+}
+
+// 登録済み言語を優先し、未翻訳時は中国語の本文を安全に代替表示する。
+function localizedOptionalText(content: { summaryZh?: string; summaryJa?: string; summaryEn?: string; bodyZh?: string; bodyJa?: string; bodyEn?: string }, field: "summary" | "body", language: SiteLanguage) {
+  // 言語ごとの候補を優先順に並べる。
+  const candidates = language === "zh"
+    ? [content[`${field}Zh`], content[`${field}Ja`], content[`${field}En`]]
+    : language === "ja"
+      ? [content[`${field}Ja`], content[`${field}Zh`], content[`${field}En`]]
+      : [content[`${field}En`], content[`${field}Zh`], content[`${field}Ja`]];
+  // 空でない最初の本文だけを返す。
+  return candidates.find((candidate): candidate is string => typeof candidate === "string" && candidate.trim().length > 0);
+}
+
+// microCMSリッチテキストをHTMLとして実行せず、読みやすいプレーンテキストへ変換する。
+function richTextToPlainText(value?: string) {
+  // 未登録の詳細は未定義のまま返す。
+  if (!value) return undefined;
+  // ブロック要素を改行へ置換し、タグを除去して安全に表示する。
+  return value.replace(/<br\s*\/?\s*>/gi, "\n").replace(/<\/p>|<\/h[1-6]>|<\/li>|<\/div>/gi, "\n").replace(/<li[^>]*>/gi, "• ").replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/\n{3,}/g, "\n\n").trim() || undefined;
+}
+
+// 本文内のmicroCMS画像だけを抽出して安全に表示できるURLへ限定する。
+function richTextImageUrls(value?: string) {
+  // 本文が未登録なら空配列を返す。
+  if (!value) return [];
+  // imgタグのsrc属性をすべて抽出する。
+  return Array.from(value.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi))
+    // 画像URL文字列だけを取り出す。
+    .map((match) => match[1])
+    // microCMS公式アセット配下のHTTPS画像だけを許可する。
+    .filter((url) => {
+      // URLとして解析できない値を安全に除外する。
+      try {
+        // 外部URLのプロトコルとホスト名を検証する。
+        const parsed = new URL(url);
+        // microCMSアセット配下のHTTPSだけを表示する。
+        return parsed.protocol === "https:" && parsed.hostname === "images.microcms-assets.io";
+      } catch {
+        // 不正なURLは表示しない。
+        return false;
+      }
+    });
 }
 
 // CMS参照を優先し、未設定の既存データだけ移行台帳からカテゴリslugを解決する。
@@ -166,6 +231,11 @@ export async function getCatalog(language: SiteLanguage) {
     categories: source.categories.map((category) => ({ slug: category.slug, displayOrder: category.displayOrder, name: localizedName(category, language), imageUrl: category.image?.url })),
     // 言語別の製品名へ変換する。
     // 言語別の製品名とカテゴリslugへ変換する。
-    products: source.products.map((product) => ({ slug: product.slug, modelNumber: product.modelNumber, displayOrder: product.displayOrder, name: localizedName(product, language), categorySlug: categorySlugForProduct(product, source.categories) })),
+    products: source.products.map((product) => {
+      // 選択言語に対応する製品本文を一度だけ取得する。
+      const localizedBody = localizedOptionalText(product, "body", language);
+      // 言語別の製品名とカテゴリslugへ変換する。
+      return { slug: product.slug, modelNumber: product.modelNumber, displayOrder: product.displayOrder, name: localizedName(product, language), categorySlug: categorySlugForProduct(product, source.categories), summary: localizedOptionalText(product, "summary", language), body: richTextToPlainText(localizedBody), thumbnailUrl: product.thumbnail?.url, bodyImageUrls: richTextImageUrls(localizedBody) };
+    }),
   };
 }

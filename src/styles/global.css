@@ -94,6 +94,10 @@ h2 { color: #132640; font-size: clamp(30px,4vw,52px); line-height: 1.3; letter-s
 .product-detail-hero h1 { margin-bottom: 5px; color: white; } /* 製品型番の主見出し色を設定する。 */
 .product-detail-hero p:last-child { margin: 0; color: #c7d7e8; font-size: 20px; } /* 製品名の文字スタイルを設定する。 */
 .detail-visual { min-height: 380px; } /* 詳細用の製品ビジュアル高さを設定する。 */
+.detail-visual img { width: 100%; height: 100%; object-fit: contain; background: white; } /* CMSの製品画像を切り抜かず詳細ビジュアル内へ表示する。 */
+.product-body { max-width: 45rem; margin: 20px 0; white-space: pre-wrap; color: #53657c; } /* CMS本文を安全なプレーンテキストとして改行を保って表示する。 */
+.product-body-images { display: grid; gap: 16px; margin: 24px 0; } /* 本文に登録されたCMS画像を縦に並べて表示する。 */
+.product-body-images img { width: 100%; max-height: 560px; object-fit: contain; background: white; } /* 本文画像を切り抜かず詳細ページ内へ収める。 */
 dl { margin: 30px 0; } /* 定義リストの上下余白を設定する。 */
 dl div { display: grid; grid-template-columns: 120px 1fr; padding: 12px 0; border-bottom: 1px solid #dbe3eb; } /* 定義リストの行構成を設定する。 */
 dt { color: #64758a; } /* 定義リストの見出し色を設定する。 */

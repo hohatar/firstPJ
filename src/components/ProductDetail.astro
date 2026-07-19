@@ -1,0 +1,40 @@
+---
+// 製品詳細の表示形式を受け取る。
+import type { CatalogProduct } from "../lib/microcms";
+
+// 製品詳細の言語別ラベルを定義する。
+type ProductDetailLabels = {
+  back: string;
+  overview: string;
+  modelNumber: string;
+  contact: string;
+  imageAlt: string;
+};
+
+// ページから受け取る値を定義する。
+interface Props {
+  product: CatalogProduct;
+  productIndexPath: string;
+  contactPath: string;
+  labels: ProductDetailLabels;
+}
+
+// 表示対象の製品とリンク先を取得する。
+const { product, productIndexPath, contactPath, labels } = Astro.props;
+---
+
+<section class="product-detail-hero"><a href={productIndexPath}>← {labels.back}</a><p class="eyebrow">PRODUCT</p><h1>{product.modelNumber}</h1><p>{product.name}</p></section>
+<section class="section detail-grid">
+  <div class="product-visual detail-visual">
+    {product.thumbnailUrl ? <img src={product.thumbnailUrl} alt={`${product.name} ${labels.imageAlt}`} loading="eager" /> : <span>{product.modelNumber}</span>}
+  </div>
+  <div class="detail-copy">
+    <p class="eyebrow">{labels.overview}</p>
+    <h2>{product.name}</h2>
+    {product.summary && <p>{product.summary}</p>}
+    {product.body && <div class="product-body">{product.body}</div>}
+    {product.bodyImageUrls.length > 0 && <div class="product-body-images">{product.bodyImageUrls.map((url) => <img src={url} alt={labels.imageAlt} loading="lazy" />)}</div>}
+    <dl><div><dt>{labels.modelNumber}</dt><dd>{product.modelNumber}</dd></div></dl>
+    <a class="button button-primary" href={contactPath}>{labels.contact}</a>
+  </div>
+</section>
