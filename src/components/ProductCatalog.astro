@@ -1,0 +1,99 @@
+---
+// カタログ表示に使うカテゴリ型を読み込む。
+import type { CatalogCategory, CatalogProduct } from "../lib/microcms";
+
+// カタログの多言語ラベルを定義する。
+type CatalogLabels = {
+  // カテゴリ見出しの補助ラベルを定義する。
+  categoryEyebrow: string;
+  // カテゴリ見出しを定義する。
+  categoryTitle: string;
+  // 全製品を表すラベルを定義する。
+  all: string;
+  // 製品一覧見出しの補助ラベルを定義する。
+  productsEyebrow: string;
+  // 製品一覧見出しを定義する。
+  productsTitle: string;
+  // 製品詳細への誘導文を定義する。
+  productLinkLabel: string;
+};
+
+// コンポーネントが受け取る値を定義する。
+interface Props {
+  // microCMSから取得したカテゴリを定義する。
+  categories: CatalogCategory[];
+  // microCMSから取得した製品を定義する。
+  products: CatalogProduct[];
+  // 製品詳細ページの言語別パスを定義する。
+  productBasePath: string;
+  // 表示言語ごとのラベルを定義する。
+  labels: CatalogLabels;
+}
+
+// ページから渡されたカタログデータを取り出す。
+const { categories, products, productBasePath, labels } = Astro.props;
+---
+
+<section class="section product-catalog" data-product-filter>
+  <div class="catalog-group">
+    <div class="catalog-title"><p class="eyebrow">{labels.categoryEyebrow}</p><h2>{labels.categoryTitle}</h2></div>
+    <div class="category-list" aria-label={labels.categoryTitle}>
+      <a class="category-filter-button is-active" href="#all-products" data-category-filter="all" aria-current="true"><span class="category-number">00</span><span class="category-name">{labels.all}</span><span class="category-image-slot"><span class="category-all-label">ALL</span></span><b>↗</b></a>
+      {categories.map((category, index) => <a class="category-filter-button" href="#all-products" data-category-filter={category.slug}><span class="category-number">{String(index + 1).padStart(2, "0")}</span><span class="category-name">{category.name}</span><span class="category-image-slot">{category.imageUrl && <img class="category-image" src={category.imageUrl} alt="" loading="lazy" />}</span><b>↗</b></a>)}
+    </div>
+  </div>
+  <div class="catalog-group" id="all-products">
+    <div class="catalog-title"><p class="eyebrow">{labels.productsEyebrow}</p><h2>{labels.productsTitle}</h2></div>
+    <div class="catalog-items">
+      {products.map((product) => <a class="product-row" data-product-category={product.categorySlug ?? ""} href={`${productBasePath}/${product.slug}/`}><span>{product.modelNumber}</span><strong>{product.name}</strong><small>{labels.productLinkLabel}</small><b>→</b></a>)}
+    </div>
+  </div>
+</section>
+
+<script>
+  // ページ内のカテゴリ絞り込み領域をすべて取得する。
+  const productFilters = document.querySelectorAll<HTMLElement>("[data-product-filter]");
+
+  // 各絞り込み領域を個別に初期化する。
+  productFilters.forEach((filter) => {
+    // カテゴリ選択リンクを取得する。
+    const categoryButtons = Array.from(filter.querySelectorAll<HTMLAnchorElement>("[data-category-filter]"));
+    // 絞り込み対象の製品行を取得する。
+    const productRows = Array.from(filter.querySelectorAll<HTMLAnchorElement>("[data-product-category]"));
+
+    // 指定したカテゴリだけを表示状態にする。
+    const selectCategory = (categorySlug: string) => {
+      // カテゴリ選択状態を見た目とアクセシビリティ情報へ反映する。
+      categoryButtons.forEach((button) => {
+        // 選択中かどうかを判定する。
+        const isActive = button.dataset.categoryFilter === categorySlug;
+        // 選択中の見た目を切り替える。
+        button.classList.toggle("is-active", isActive);
+        // 現在選択中のカテゴリを支援技術へ伝える。
+        button.toggleAttribute("aria-current", isActive);
+      });
+      // 全製品または選択カテゴリの製品だけを表示する。
+      productRows.forEach((row) => {
+        // 対象カテゴリかどうかを判定する。
+        const isVisible = categorySlug === "all" || row.dataset.productCategory === categorySlug;
+        // 非対象製品を静的HTML上で非表示にする。
+        row.hidden = !isVisible;
+      });
+    };
+
+    // 各カテゴリ選択リンクに絞り込み処理を設定する。
+    categoryButtons.forEach((button) => {
+      // 通常のリンク遷移を絞り込み操作へ置き換える。
+      button.addEventListener("click", (event) => {
+        // 同じページ内での標準遷移を止める。
+        event.preventDefault();
+        // data属性から選択カテゴリを取得する。
+        const categorySlug = button.dataset.categoryFilter || "all";
+        // 選択カテゴリの製品を表示する。
+        selectCategory(categorySlug);
+        // 絞り込み結果が見える位置へ移動する。
+        filter.querySelector("#all-products")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  });
+</script>

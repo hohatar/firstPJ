@@ -1,4 +1,7 @@
 // 対応する公開言語を定義する。
+// 既存製品とカテゴリの移行対応表をビルド時だけに読み込む。
+import legacyProductCategoryCsv from "../../docs/legacy-migration-products.csv?raw";
+
 export type SiteLanguage = "ja" | "zh" | "en";
 
 // microCMSの製品カテゴリ返却形式を定義する。
@@ -9,12 +12,16 @@ type MicrocmsCategory = {
   slug: string;
   // 表示順を定義する。
   displayOrder: number;
+  // 既存サイトのカテゴリIDを任意で保持する。
+  legacyCategoryId?: number;
   // 中国語のカテゴリ名を定義する。
   nameZh: string;
   // 日本語のカテゴリ名を定義する。
   nameJa: string;
   // 英語のカテゴリ名を定義する。
   nameEn: string;
+  // microCMSに登録したカテゴリ画像を定義する。
+  image?: { url: string };
 };
 
 // microCMSの製品返却形式を定義する。
@@ -23,8 +30,12 @@ type MicrocmsProduct = {
   id: string;
   // URL用の識別子を定義する。
   slug: string;
+  // 既存サイトの製品IDを保持する。
+  legacyProductId?: number;
   // 製品の型番を定義する。
   modelNumber: string;
+  // microCMSで設定されたカテゴリ参照を任意で保持する。
+  category?: { slug?: string };
   // 表示順を定義する。
   displayOrder: number;
   // 中国語の製品名を定義する。
@@ -51,6 +62,8 @@ export type CatalogCategory = {
   displayOrder: number;
   // 言語に応じたカテゴリ名を定義する。
   name: string;
+  // カテゴリカードに表示する画像URLを定義する。
+  imageUrl?: string;
 };
 
 // サイト表示に使う製品形式を定義する。
@@ -63,7 +76,17 @@ export type CatalogProduct = {
   displayOrder: number;
   // 言語に応じた製品名を定義する。
   name: string;
+  // 製品一覧の絞り込みに使うカテゴリのslugを定義する。
+  categorySlug?: string;
 };
+
+// 既存製品IDから既存カテゴリIDを引けるよう移行台帳を変換する。
+const legacyCategoryIdByProductId = new Map(legacyProductCategoryCsv.trim().split(/\r?\n/).slice(1).map((row) => {
+  // CSVの先頭二列だけを製品IDとカテゴリIDとして取り出す。
+  const [legacyProductId, legacyCategoryId] = row.split(",", 3);
+  // 数値へ変換した対応関係を返す。
+  return [Number(legacyProductId), Number(legacyCategoryId)] as const;
+}));
 
 // ビルド中に同じAPIを繰り返し呼ばないためのキャッシュを定義する。
 let catalogPromise: Promise<{ categories: MicrocmsCategory[]; products: MicrocmsProduct[] }> | undefined;
@@ -76,6 +99,18 @@ function localizedName(content: { nameZh: string; nameJa: string; nameEn: string
   if (language === "en") return content.nameEn;
   // 日本語の表示名を返す。
   return content.nameJa;
+}
+
+// CMS参照を優先し、未設定の既存データだけ移行台帳からカテゴリslugを解決する。
+function categorySlugForProduct(product: MicrocmsProduct, categories: MicrocmsCategory[]) {
+  // CMSにカテゴリslugがある場合はその値を使う。
+  if (product.category?.slug) return product.category.slug;
+  // 既存製品IDから既存カテゴリIDを取得する。
+  const legacyCategoryId = product.legacyProductId ? legacyCategoryIdByProductId.get(product.legacyProductId) : undefined;
+  // 既存カテゴリIDがない場合は未分類として扱う。
+  if (!legacyCategoryId) return undefined;
+  // CMSカテゴリのslugへ変換する。
+  return categories.find((category) => category.legacyCategoryId === legacyCategoryId)?.slug;
 }
 
 // 必須のmicroCMS環境変数を検証する。
@@ -127,8 +162,10 @@ export async function getCatalog(language: SiteLanguage) {
   // 表示用データを返す。
   return {
     // 言語別のカテゴリ名へ変換する。
-    categories: source.categories.map((category) => ({ slug: category.slug, displayOrder: category.displayOrder, name: localizedName(category, language) })),
+    // microCMSに登録されたカテゴリ画像を表示用データへ引き継ぐ。
+    categories: source.categories.map((category) => ({ slug: category.slug, displayOrder: category.displayOrder, name: localizedName(category, language), imageUrl: category.image?.url })),
     // 言語別の製品名へ変換する。
-    products: source.products.map((product) => ({ slug: product.slug, modelNumber: product.modelNumber, displayOrder: product.displayOrder, name: localizedName(product, language) })),
+    // 言語別の製品名とカテゴリslugへ変換する。
+    products: source.products.map((product) => ({ slug: product.slug, modelNumber: product.modelNumber, displayOrder: product.displayOrder, name: localizedName(product, language), categorySlug: categorySlugForProduct(product, source.categories) })),
   };
 }

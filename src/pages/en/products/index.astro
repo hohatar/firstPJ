@@ -1,14 +1,16 @@
 ---
 // 共通レイアウトを読み込む。
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-// microCMSから英語のカテゴリと製品を取得する。
+// 製品カテゴリの絞り込み表示を読み込む。
+import ProductCatalog from "../../../components/ProductCatalog.astro";
+// microCMSから英語のカタログを取得する。
 import { getCatalog } from "../../../lib/microcms";
 
-// ビルド時に英語のカタログを取得する。
+// ビルド時に英語のカタログデータを取得する。
 const { categories, products } = await getCatalog("en");
 ---
 
 <BaseLayout lang="en" title="Products" description="ASD ESD products for electrostatic control and ionization.">
   <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>Electrostatic-control products<br /><em>for your application.</em></h1><p>Specifications and documents will be published after their review is complete.</p></section>
-  <section class="section product-catalog"><div class="catalog-group"><div class="catalog-title"><p class="eyebrow">CATEGORY</p><h2>Product categories</h2></div><div class="category-list">{categories.map((category, index) => <a href="#all-products"><span>{String(index + 1).padStart(2, "0")}</span>{category.name}<b>↗</b></a>)}</div></div><div class="catalog-group" id="all-products"><div class="catalog-title"><p class="eyebrow">ALL PRODUCTS</p><h2>Product list</h2></div><div class="catalog-items">{products.map((product) => <a class="product-row" href={`/en/products/${product.slug}/`}><span>{product.modelNumber}</span><strong>{product.name}</strong><small>View product information</small><b>→</b></a>)}</div></div></section>
+  <ProductCatalog categories={categories} products={products} productBasePath="/en/products" labels={{ categoryEyebrow: "CATEGORY", categoryTitle: "Product categories", all: "All", productsEyebrow: "ALL PRODUCTS", productsTitle: "Product list", productLinkLabel: "View product information" }} />
 </BaseLayout>
