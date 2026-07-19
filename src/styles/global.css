@@ -13,7 +13,8 @@ h1, h2, h3, p { margin-top: 0; } /* 見出しと段落の上余白をリセッ�
 nav { display: flex; align-items: center; gap: clamp(16px,3vw,38px); color: #25364d; font-size: 14px; font-weight: 700; } /* ナビゲーションの配置と文字スタイルを設定する。 */
 nav a:hover { color: #0879c9; } /* ナビゲーションのホバー色を設定する。 */
 .nav-contact { padding: 10px 17px; color: white; background: #0a3b75; } /* 問い合わせ導線を強調する。 */
-.language-link { color: #0879c9; } /* 言語切替リンクを強調する。 */
+.language-switcher { display: flex; gap: 9px; color: #0879c9; font-size: 12px; } /* 三言語の切替リンクを横並びにする。 */
+.language-switcher a { text-decoration: underline; text-underline-offset: 3px; } /* 言語切替リンクを判別しやすくする。 */
 .hero { display: grid; min-height: min(760px,calc(100vh - 73px)); grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: stretch; background: #e8eff7; } /* トップの二分割ヒーローを設定する。 */
 .hero-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(64px,10vw,156px) clamp(24px,8vw,128px); } /* ヒーロー本文の余白と配置を設定する。 */
 .eyebrow { margin: 0 0 16px; color: #0879c9; font-size: 11px; font-weight: 800; letter-spacing: .18em; } /* 英字ラベルの視覚表現を設定する。 */
@@ -91,4 +92,4 @@ dd { margin: 0; color: #1c324e; font-weight: 700; } /* 定義リストの値の�
 .site-footer p { margin: 7px 0 0; font-size: 13px; } /* フッター説明文の余白を設定する。 */
 .footer-contact { display: flex; flex-direction: column; align-items: end; gap: 5px; color: white; font-weight: 700; } /* フッター連絡先の配置を設定する。 */
 .site-footer small { grid-column: 1 / -1; padding-top: 22px; border-top: 1px solid #30445c; color: #91a3b6; } /* フッター著作権表示を設定する。 */
-@media (max-width: 780px) { .site-header { padding: 14px 20px; } .brand small { display: none; } nav { gap: 13px; font-size: 12px; } .nav-contact { padding: 8px 10px; } .hero { grid-template-columns: 1fr; } .hero-image { min-height: 330px; max-height: 430px; } .feature-grid, .product-grid, .value-grid, .prose-section, .catalog-group, .detail-grid, .contact-grid { grid-template-columns: 1fr; } .section-heading { align-items: start; flex-direction: column; } .product-row { grid-template-columns: 1fr 24px; } .product-row span, .product-row small { display: none; } .site-footer { grid-template-columns: 1fr; } .footer-contact { align-items: start; } } /* モバイル幅でレイアウトを一列へ切り替える。 */
+@media (max-width: 780px) { .site-header { align-items: flex-start; padding: 14px 20px; } .brand small { display: none; } nav { flex-wrap: wrap; justify-content: flex-end; gap: 10px; font-size: 12px; } .language-switcher { gap: 6px; } .nav-contact { padding: 8px 10px; } .hero { grid-template-columns: 1fr; } .hero-image { min-height: 330px; max-height: 430px; } .feature-grid, .product-grid, .value-grid, .prose-section, .catalog-group, .detail-grid, .contact-grid { grid-template-columns: 1fr; } .section-heading { align-items: start; flex-direction: column; } .product-row { grid-template-columns: 1fr 24px; } .product-row span, .product-row small { display: none; } .site-footer { grid-template-columns: 1fr; } .footer-contact { align-items: start; } } /* モバイル幅でレイアウトを一列へ切り替える。 */

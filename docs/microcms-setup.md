@@ -26,7 +26,7 @@
 ## 現在のAstro連携
 
 - `MICROCMS_SERVICE_DOMAIN`と`MICROCMS_API_KEY`をローカルの`.env`およびCloudflare Pagesの環境変数へ設定する。
-- Astroはビルド時に`product-categories`と`products`を取得し、日本語ページと中国語ページの一覧・詳細を静的生成する。
+- Astroはビルド時に`product-categories`と`products`を取得し、中国語（ルート直下）、日本語（`/ja/`）、英語（`/en/`）の一覧・詳細を静的生成する。`/zh/`配下は中国語の互換URLとして同じコンテンツを生成する。
 - 現在の`products` APIにはカテゴリ参照、本文、画像が未登録のため、製品は表示順による全件一覧として表示する。これらの項目を追加した後に、カテゴリ別表示や詳細説明・製品画像表示へ拡張する。
 
 ## CSVの使い方

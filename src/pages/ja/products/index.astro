@@ -1,0 +1,14 @@
+---
+// 共通レイアウトを読み込む。
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+// microCMSから日本語のカテゴリと製品を取得する。
+import { getCatalog } from "../../../lib/microcms";
+
+// ビルド時に日本語のカタログを取得する。
+const { categories, products } = await getCatalog("ja");
+---
+
+<BaseLayout lang="ja" title="製品" description="ASD ESDの静電気対策・除電製品一覧です。">
+  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>用途に合わせた<br /><em>静電気対策製品。</em></h1><p>製品仕様・資料は確認を終えたものから順次掲載します。</p></section>
+  <section class="section product-catalog"><div class="catalog-group"><div class="catalog-title"><p class="eyebrow">CATEGORY</p><h2>製品カテゴリ</h2></div><div class="category-list">{categories.map((category, index) => <a href="#all-products"><span>{String(index + 1).padStart(2, "0")}</span>{category.name}<b>↗</b></a>)}</div></div><div class="catalog-group" id="all-products"><div class="catalog-title"><p class="eyebrow">ALL PRODUCTS</p><h2>製品一覧</h2></div><div class="catalog-items">{products.map((product) => <a class="product-row" href={`/ja/products/${product.slug}/`}><span>{product.modelNumber}</span><strong>{product.name}</strong><small>製品情報を見る</small><b>→</b></a>)}</div></div></section>
+</BaseLayout>

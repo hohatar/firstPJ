@@ -2,12 +2,30 @@
 // グローバルスタイルを読み込む。
 import "../styles/global.css";
 
+// 対応する公開言語を定義する。
+type SiteLanguage = "zh" | "ja" | "en";
+
 // 呼び出し元からページ情報と言語を受け取る。
-const { title, description = "静電気対策・除電技術のASD ESD", lang = "ja" } = Astro.props;
-// 中国語表示かどうかを判定する。
-const isChinese = lang === "zh";
-// 表示言語に応じたナビゲーション文言を定義する。
-const navigation = isChinese ? { about: "公司简介", products: "产品展示", contact: "联系我们", switchLabel: "日本語" } : { about: "会社・技術紹介", products: "製品", contact: "お問い合わせ", switchLabel: "中文" };
+const { title, description, lang = "zh" } = Astro.props as { title: string; description: string; lang?: SiteLanguage };
+// 現在のURLから言語接頭辞を除いた対応ページのパスを取得する。
+const contentPath = Astro.url.pathname.replace(/^\/(?:zh|ja|en)(?=\/|$)/, "") || "/";
+// 中国語を正規URLとする各言語ページのURLを生成する。
+const languagePaths: Record<SiteLanguage, string> = { zh: contentPath, ja: `/ja${contentPath}`, en: `/en${contentPath}` };
+// 各言語のサイトルートを定義する。
+const languageRoots: Record<SiteLanguage, string> = { zh: "", ja: "/ja", en: "/en" };
+// ブランドから遷移する現在言語のトップURLを定義する。
+const homePath = lang === "zh" ? "/" : `${languageRoots[lang]}/`;
+// 表示言語ごとの共通文言を定義する。
+const copy: Record<SiteLanguage, { home: string; navigation: string; about: string; products: string; contact: string; language: string; footer: string }> = {
+  // 中国語の共通文言を定義する。
+  zh: { home: "ASD ESD 首页", navigation: "主菜单", about: "公司简介", products: "产品展示", contact: "联系我们", language: "语言", footer: "静电控制与除静电技术专业企业" },
+  // 日本語の共通文言を定義する。
+  ja: { home: "ASD ESD ホーム", navigation: "主要メニュー", about: "会社・技術紹介", products: "製品", contact: "お問い合わせ", language: "言語", footer: "静電気対策・除電技術の専門企業" },
+  // 英語の共通文言を定義する。
+  en: { home: "ASD ESD home", navigation: "Main navigation", about: "About", products: "Products", contact: "Contact", language: "Language", footer: "Specialists in electrostatic control and ionization technology" },
+};
+// 現在の言語に対応する共通文言を取得する。
+const text = copy[lang];
 ---
 
 <!doctype html>
@@ -16,14 +34,19 @@ const navigation = isChinese ? { about: "公司简介", products: "产品展示"
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={languagePaths.zh} />
+    <link rel="alternate" hreflang="zh" href={languagePaths.zh} />
+    <link rel="alternate" hreflang="ja" href={languagePaths.ja} />
+    <link rel="alternate" hreflang="en" href={languagePaths.en} />
+    <link rel="alternate" hreflang="x-default" href={languagePaths.zh} />
     <title>{title} | ASD ESD</title>
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="ASD ESD ホーム"><span class="brand-mark" aria-hidden="true">A</span><span><strong>ASD ESD</strong><small>STATIC CONTROL TECHNOLOGY</small></span></a>
-      <nav aria-label={isChinese ? "主要菜单" : "主要メニュー"}><a href={isChinese ? "/zh/about/" : "/about/"}>{navigation.about}</a><a href={isChinese ? "/zh/products/" : "/products/"}>{navigation.products}</a><a class="language-link" href={isChinese ? "/" : "/zh/"}>{navigation.switchLabel}</a><a class="nav-contact" href={isChinese ? "/zh/contact/" : "/contact/"}>{navigation.contact}</a></nav>
+      <a class="brand" href={homePath} aria-label={text.home}><span class="brand-mark" aria-hidden="true">A</span><span><strong>ASD ESD</strong><small>STATIC CONTROL TECHNOLOGY</small></span></a>
+      <nav aria-label={text.navigation}><a href={`${languageRoots[lang]}/about/`}>{text.about}</a><a href={`${languageRoots[lang]}/products/`}>{text.products}</a><div class="language-switcher" aria-label={text.language}><a href={languagePaths.zh} lang="zh">中文</a><a href={languagePaths.en} lang="en">English</a><a href={languagePaths.ja} lang="ja">日本語</a></div><a class="nav-contact" href={`${languageRoots[lang]}/contact/`}>{text.contact}</a></nav>
     </header>
     <main><slot /></main>
-    <footer class="site-footer"><div><strong>ASD ESD</strong><p>静電気対策・除電技術の専門企業</p></div><div class="footer-contact"><a href="tel:+861082416531">+86 10 8241 6531</a><a href="mailto:asd-esd@163.com">asd-esd@163.com</a></div><small>© {new Date().getFullYear()} Beijing ASD Technology Development Co., Ltd.</small></footer>
+    <footer class="site-footer"><div><strong>ASD ESD</strong><p>{text.footer}</p></div><div class="footer-contact"><a href="tel:+861082416531">+86 10 8241 6531</a><a href="mailto:asd-esd@163.com">asd-esd@163.com</a></div><small>© {new Date().getFullYear()} Beijing ASD Technology Development Co., Ltd.</small></footer>
   </body>
 </html>

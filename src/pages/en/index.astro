@@ -1,0 +1,19 @@
+---
+// 共通レイアウトを読み込む。
+import BaseLayout from "../../layouts/BaseLayout.astro";
+// microCMSから英語のカテゴリと製品を取得する。
+import { getCatalog } from "../../lib/microcms";
+
+// ビルド時に英語のカタログを取得する。
+const { categories, products } = await getCatalog("en");
+// 表示する代表製品を先頭3件に限定する。
+const featuredProducts = products.slice(0, 3);
+---
+
+<BaseLayout lang="en" title="Electrostatic Control and Ionization Technology" description="ASD ESD provides electrostatic control and ionization technology for manufacturing environments.">
+  <section class="hero"><div class="hero-copy"><p class="eyebrow">ELECTROSTATIC CONTROL TECHNOLOGY</p><h1>Professional electrostatic control,<br /><em>built on reliable technology.</em></h1><p class="hero-lead">We support electrostatic-control challenges in manufacturing environments through high-frequency ionization technology.</p><div class="action-row"><a class="button button-primary" href="/en/products/">View products</a><a class="button button-quiet" href="/en/about/">About ASD ESD</a></div></div><img class="hero-image" src="/images/hero-industrial-lab-v2.png" alt="Illustration of electrostatic control in an electronics manufacturing environment" /></section>
+  <section class="section trust-section"><p class="eyebrow">OUR EXPERTISE</p><h2>Stable ionization performance<br />for manufacturing operations.</h2><div class="feature-grid"><article><span>01</span><h3>High-frequency technology</h3><p>Our focus is on high-frequency ionization technology for stable electrostatic control.</p></article><article><span>02</span><h3>Broad product range</h3><p>Our product range includes ion blowers, ion guns, ion bars, and electrostatic-protection products.</p></article><article><span>03</span><h3>Technical support</h3><p>We support product selection and operation according to each application.</p></article></div></section>
+  <section class="section catalog-section"><div class="section-heading"><div><p class="eyebrow">PRODUCTS</p><h2>Product line-up</h2></div><a href="/en/products/">View all products →</a></div><div class="category-list">{categories.map((category, index) => <a href="/en/products/#all-products"><span>{String(index + 1).padStart(2, "0")}</span>{category.name}<b>↗</b></a>)}</div></section>
+  <section class="section featured-section"><div class="section-heading"><div><p class="eyebrow">FEATURED</p><h2>Featured products</h2></div></div><div class="product-grid">{featuredProducts.map((product) => <a class="product-card" href={`/en/products/${product.slug}/`}><div class="product-visual"><span>{product.modelNumber}</span></div><p>{product.name}</p><h3>{product.modelNumber}</h3><small>View product information</small></a>)}</div></section>
+  <section class="contact-banner"><p class="eyebrow">CONTACT</p><h2>Contact us about product selection<br />or electrostatic-control requirements.</h2><a class="button button-primary" href="/en/contact/">Contact us</a></section>
+</BaseLayout>

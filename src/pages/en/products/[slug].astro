@@ -1,0 +1,23 @@
+---
+// 共通レイアウトを読み込む。
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+// microCMSから英語の製品データを取得する。
+import { getCatalog } from "../../../lib/microcms";
+
+// 英語用の製品URLを静的生成する。
+export async function getStaticPaths() {
+  // ビルド時に英語の製品一覧を取得する。
+  const { products } = await getCatalog("en");
+  // 製品データからURLパラメータを作成する。
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+
+// 静的ページ用の製品データを受け取る。
+const { product } = Astro.props;
+---
+
+<BaseLayout lang="en" title={`${product.modelNumber} | ${product.name}`} description={`Product information for ${product.name} (${product.modelNumber}).`}>
+  <section class="product-detail-hero"><a href="/en/products/">← Back to product list</a><p class="eyebrow">PRODUCT</p><h1>{product.modelNumber}</h1><p>{product.name}</p></section>
+  <section class="section detail-grid"><div class="product-visual detail-visual"><span>{product.modelNumber}</span></div><div class="detail-copy"><p class="eyebrow">OVERVIEW</p><h2>{product.name}</h2><p>Product details, specifications, images, and documents will be added after their content has been confirmed and published in microCMS.</p><dl><div><dt>Model number</dt><dd>{product.modelNumber}</dd></div><div><dt>Display order</dt><dd>{product.displayOrder}</dd></div></dl><a class="button button-primary" href="/en/contact/">Ask about this product</a></div></section>
+  <section class="section specification-note"><p class="eyebrow">SPECIFICATIONS</p><h2>Specifications and documents will be added after confirmation.</h2><p>Accurate specifications, applicable environments, manuals, and catalogues will be published in microCMS after product-owner approval.</p></section>
+</BaseLayout>
