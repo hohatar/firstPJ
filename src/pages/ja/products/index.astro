@@ -11,6 +11,6 @@ const { categories, products } = await getCatalog("ja");
 ---
 
 <BaseLayout lang="ja" title="製品" description="ASD ESDの静電気対策・除電製品一覧です。">
-  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>用途に合わせた<br /><em>静電気対策製品。</em></h1><p>製品仕様・資料は確認を終えたものから順次掲載します。</p></section>
+  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>用途に合わせた<br /><em>静電気対策製品。</em></h1></section>
   <ProductCatalog categories={categories} products={products} productBasePath="/ja/products" labels={{ categoryEyebrow: "CATEGORY", categoryTitle: "製品カテゴリ", all: "すべて", productsEyebrow: "ALL PRODUCTS", productsTitle: "製品一覧", productLinkLabel: "製品情報を見る" }} />
 </BaseLayout>

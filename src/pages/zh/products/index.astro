@@ -11,6 +11,6 @@ const { categories, products } = await getCatalog("zh");
 ---
 
 <BaseLayout lang="zh" title="产品展示" description="北京亚司达科技发展有限公司产品展示。">
-  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>产品展示</h1><p>以下分类和代表型号根据现有网站整理。详细参数、图片和资料将在确认后补充。</p></section>
+  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>产品展示</h1></section>
   <ProductCatalog categories={categories} products={products} productBasePath="/zh/products" labels={{ categoryEyebrow: "CATEGORY", categoryTitle: "产品分类", all: "全部", productsEyebrow: "ALL PRODUCTS", productsTitle: "产品列表", productLinkLabel: "查看产品信息" }} />
 </BaseLayout>

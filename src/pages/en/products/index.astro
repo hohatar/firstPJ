@@ -11,6 +11,6 @@ const { categories, products } = await getCatalog("en");
 ---
 
 <BaseLayout lang="en" title="Products" description="ASD ESD products for electrostatic control and ionization.">
-  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>Electrostatic-control products<br /><em>for your application.</em></h1><p>Specifications and documents will be published after their review is complete.</p></section>
+  <section class="page-hero compact"><p class="eyebrow">PRODUCTS</p><h1>Electrostatic-control products<br /><em>for your application.</em></h1></section>
   <ProductCatalog categories={categories} products={products} productBasePath="/en/products" labels={{ categoryEyebrow: "CATEGORY", categoryTitle: "Product categories", all: "All", productsEyebrow: "ALL PRODUCTS", productsTitle: "Product list", productLinkLabel: "View product information" }} />
 </BaseLayout>
